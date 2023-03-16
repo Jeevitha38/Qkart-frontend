@@ -10,12 +10,13 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
   const [log, setLog] = useState(children);
   console.log(log);
   return (
-    <Box className="header">      <Box className="header-title">        <img src="logo_light.svg" alt="QKart-icon"></img>      </Box>      {hasHiddenAuthButtons ? (
-        <Button          className="explore-button"          startIcon={<ArrowBackIcon />}
-          variant="text"          onClick={(e) => {
-            history.push("/");
-          }}
-        >          Back to explore
+    <Box className="header">
+      <Box className="header-title">        
+      <img src="logo_light.svg" alt="QKart-icon"></img>      
+      </Box>      
+      {hasHiddenAuthButtons ? 
+      (<Button className="explore-button" startIcon={<ArrowBackIcon />} variant="text" onClick={(e) => {history.push("/");
+      }}>Back to explore
         </Button>      ) : (
         <Box>          {log ? (
             <Stack direction="row" spacing={2} alignItems="center">              <Avatar alt={localStorage.getItem("username")} src="avatar.png" />              <p className="title">{localStorage.getItem("username")}</p>              <Button                className="explore-button"                variant="text"                onClick={(e) => {
