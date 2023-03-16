@@ -167,9 +167,8 @@ const Login = () => {
           }
           <p className="secondary-action">
             Don't have an account?
-            <a className="link" href="./Register.js">
             <Link to="/Register">Register now</Link>
-            </a>
+            
           </p>
         </Stack>
       </Box>
