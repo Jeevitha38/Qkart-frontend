@@ -7,9 +7,11 @@ import { config } from "../App";
 import Footer from "./Footer";
 import Header from "./Header";
 import "./Register.css";
+import { useHistory, Link } from "react-router-dom";
+
 const Register = () => {
   const { enqueueSnackbar } = useSnackbar();
-  // TODO: CRIO_TASK_MODULE_REGISTER - Implement the register function
+  const history=useHistory(); // in order to redirect to the login page after registering by clicking on register button
   /**
    * Definition for register handler
    * - Function to be called when the user clicks on the register button or submits the register form
@@ -52,12 +54,11 @@ const Register = () => {
       try {
         const data = { username: formData.username, password: formData.password}
          const response = await axios.post(
-          `${config.endpoint}/auth/register`,
-          data
-        );
+          `${config.endpoint}/auth/register`,data);
         console.log(response)
         if (response.data.success) {
           enqueueSnackbar("Registered successfully", { variant: "success" });
+          history.push('/login') //on succesfull post request the page redirects to login page
         }
         setIsLoading(false);
       } 
@@ -94,8 +95,13 @@ const Register = () => {
       enqueueSnackbar("Username is a required field", { variant: "warning" });
       return false;
     }
-    if (data.username.length < 6) {      enqueueSnackbar("Username must be at least 6 characters", {        variant: "error",      });      return false;    }    if (!data.password) {      enqueueSnackbar("Password is a required field", { variant: "warning" });      return false;    }    if (data.password.length < 6) {      enqueueSnackbar("Password must be at least 6 characters", {
-        variant: "error",
+    if (data.username.length < 6) {      enqueueSnackbar("Username must be at least 6 characters", {        variant: "error",      });      return false;    }   
+     if (!data.password) { 
+      enqueueSnackbar("Password is a required field", { variant: "warning" });      
+      return false;    
+    }    
+    if (data.password.length < 6) {      enqueueSnackbar("Password must be at least 6 characters", {
+      variant: "error",
       });
       return false;
     }
@@ -106,12 +112,23 @@ const Register = () => {
     return true;
   };
   return (
-    <Box      display="flex"      flexDirection="column"      justifyContent="space-between"      minHeight="100vh"         >      <Header hasHiddenAuthButtons />    <Box className="content">    <Stack spacing={2} className="form">      <h2 className="title">Register</h2>       <TextField            id="username"            label="Username"            variant="outlined"            title="Username"            name="username"            placeholder="Enter Username"            fullWidth            value={formData.username}            onChange={handleInputChange}          />          <TextField            id="password"            variant="outlined"            label="Password"            name="password"            type="password"            helperText="Password must be atleast 6 characters length"            fullWidth            placeholder="Enter a password with minimum 6 characters"            value={formData.password}            onChange={handleInputChange}          />          <TextField            id="confirmPassword"            variant="outlined"            label="Confirm Password"            name="confirmPassword"            type="password"            fullWidth            value={formData.confirmPassword}            onChange={handleInputChange}          />   <br/>           {!isLoading?(<Button className="button" variant="contained" onClick={() => register(formData)} disabled={isLoading}>           Register Now
+    <Box      display="flex"      
+    flexDirection="column"      
+    justifyContent="space-between"      
+    minHeight="100vh"         >      
+    <Header hasHiddenAuthButtons />    
+    <Box className="content">    
+    <Stack spacing={2} className="form">      
+    <h2 className="title">Register</h2> 
+          <TextField            id="username"            label="Username"            variant="outlined"            title="Username"            name="username"            placeholder="Enter Username"            fullWidth            value={formData.username}            onChange={handleInputChange}          />        
+          <TextField            id="password"            variant="outlined"            label="Password"            name="password"            type="password"            helperText="Password must be atleast 6 characters length"            fullWidth            placeholder="Enter a password with minimum 6 characters"            value={formData.password}            onChange={handleInputChange}          />         
+           <TextField            id="confirmPassword"            variant="outlined"            label="Confirm Password"            name="confirmPassword"            type="password"            fullWidth            value={formData.confirmPassword}            onChange={handleInputChange}          />   <br/>        
+              {!isLoading?(<Button className="button" variant="contained" onClick={() => register(formData)} disabled={isLoading}>           Register Now
            </Button>) : (<CircularProgress style={{margin: '0 auto'}}/>)
             }        
            <p className="secondary-action">            Already have an account?
-             <a className="link" href="#">                      Login here
-             </a>             </p>            
+             <Link to="/Login">Login here </Link>        
+           </p>            
             </Stack>              
             </Box>              
             <Footer />               
