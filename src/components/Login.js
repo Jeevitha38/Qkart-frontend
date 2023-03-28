@@ -8,7 +8,7 @@ import { config } from "../App";
 import Footer from "./Footer";
 import Header from "./Header";
 import "./Login.css";
-
+import Cart from './Cart'
 const Login = () => {
   const { enqueueSnackbar } = useSnackbar();
   const history=useHistory();
@@ -62,6 +62,7 @@ const Login = () => {
           setIsLoading(false);
           history.push('/');
           persistLogin(response.data.token,response.data.username,response.data.balance);
+          <Cart/>
         }
       } catch (error) {
         try {
