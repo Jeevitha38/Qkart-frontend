@@ -83,7 +83,7 @@ const ItemQuantity = ({value, handleAdd, handleDelete}) => {
   //     </> 
   //     ); 
   //   };
-    const Cart = ({ products, items = [], handleQuantity}) => 
+    const Cart = ({ products, items = [], handleQuantity ,isReadOnly=false}) => 
     { 
       let history=useHistory(); 
       if (!items.length) { 
@@ -112,13 +112,13 @@ const ItemQuantity = ({value, handleAdd, handleDelete}) => {
         </div> 
         <Box display="flex" justifyContent="space-between" alignItems="center"> 
         {console.log(item.qty)}
-        <Box style={{ fontSize: "1rem" }}>Qty:{item.qty}</Box>
+        {isReadOnly?(<Box style={{ fontSize: "1rem" }}>Qty:{item.qty}</Box>):
          
          
-         <ItemQuantity value={item.qty}  
+         (<ItemQuantity value={item.qty}  
          handleAdd={() => handleQuantity(item.productId, item.qty + 1) } 
          handleDelete={() => handleQuantity(item.productId, item.qty - 1) }
-          /> 
+          /> )}
       
         <Box padding="0.5rem" fontWeight="700"> ${item.cost}</Box>
         </Box>
